@@ -13,11 +13,15 @@ export const AnimatedLink = ({
       to={to}
       onClick={(ev) => {
         ev.preventDefault();
-        document?.startViewTransition(() => {
-          flushSync(() => {
-            navigate(to);
+        if (document.startViewTransition) {
+          document?.startViewTransition(() => {
+            flushSync(() => {
+              navigate(to);
+            });
           });
-        });
+        } else {
+          navigate(to)
+        }
       }}
       {...rest}
     >
